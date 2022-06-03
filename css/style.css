@@ -20,6 +20,10 @@
     width: 80px;
     height: 80px;
     right: -80px; /* DESLOCAMENTO DO PIPE NA TELA*/
+    
+}
+
+.pipeanimation {
     /*           (ANIMAÇÃO)(VELOC)(LOOP)(CONSTANCIA)*/
     animation: pipe-animation 1.5s infinite linear;
 }
@@ -48,7 +52,7 @@
 .gameover {
     position: absolute;
     font-family: 'Stencil', Arial, Helvetica, sans-serif;
-    color: rgba(0, 0, 0, 0.733);
+    color: #000000bb;
     font-weight: 700;
     font-size: 3em;
     /* CENTRALIZAR ELEMENTOS COM LARGURA E ALTURA DESCONHECIDOS */
@@ -64,6 +68,7 @@
     font-weight: 700;
     font-size: 3em;
     left: 10px;
+    text-shadow: #87CEEB 2px 3px 2px;
 }
 
 .tempo {
@@ -81,6 +86,7 @@
     /* POSIÇÃO QUE O PIPE COMEÇA */
     from {
         right: 0;
+        /*right: -80px;*/
     }
     /* POSIÇÃO QUE O PIPE TERMINA */
     to {

@@ -9,13 +9,30 @@ const gameover = document.querySelector('.gameover')
 
 // PEGA O SPAM DE PONTOS
 const pontos = document.querySelector('.pontos')
-let contPontos = 0
-let podePontuar = true
+let contPontos
+let podePontuar
+
+let dia = true
 
 // TEMPO
 const display = document.querySelector('.tempo');
+
+const gameboard = document.querySelector('.game-board')
+
+var jump
+var loop
+var pontuou
+var tempo
+var fundo
+function start() {
+    contPontos = 0
+    podePontuar = false
+
+    pipe.classList.add('pipeanimation')
+
+
 var timer = 0, minutes, seconds;
-    const tempo = setInterval(() => {
+    tempo = setInterval(() => {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
         minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -29,22 +46,8 @@ var timer = 0, minutes, seconds;
     }, 1000);
 
 // FUNÇÃO QUE ADICIONA  E REMOVE A CLASSE JUMP NA IMAGEM DO MARIO PARA ELE PULAR
-const jump = () => {
+jump = () => {
     mario.classList.add('jump')
-
-    //console.log('PODE PONTUAR: ' + podePontuar)
-    /*if (podePontuar) {
-        contPontos++
-        pontos.innerHTML = contPontos
-    }
-    podePontuar = false*/
-
-    let marioPositionb = +window.getComputedStyle(mario).bottom.replace('px', '')
-    if(pipe.offsetLeft <= 120 && pipe.offsetLeft > 0 && marioPositionb >= 148){
-        contPontos++
-        pontos.innerHTML = contPontos
-        
-    }
 
     // FUNÇÃO QUE RECEBE UMA FUNÇÃO ANONIMA E UM TEMPO
     setTimeout(() => {
@@ -53,7 +56,7 @@ const jump = () => {
 }
 
 // FUNÇÃO QUE CALCULA SE O MARIO BATEU NO PIPE
-const loop = setInterval(() => {
+loop = setInterval(() => {
     // PEGA A POSIÇÃO DO PIPE
     const pipePosition = pipe.offsetLeft
     // SÓ DESSE JEITO VAI CONSEGUIR EPEGAR QUALQUER PROPRIEDADE SETADA NO MARIO
@@ -64,7 +67,8 @@ const loop = setInterval(() => {
     // TESTA SE A POSIÇÃO DO PIPE FOR MENOR OU IGUAL A 120 ENTÃO ELA BATEU NO MARIO
     if (pipePosition <= 120 && pipePosition > 0 && marioPosition < 148) {
         // PARA A ANIMAÇÃO DO PIPE
-        pipe.style.animation = 'none'
+        //pipe.style.animation = 'none'
+        pipe.classList.remove('pipeanimation')
         // SETA A POSIÇÃO QUE BATEU NO MARIO
         pipe.style.left = `${pipePosition}px`
 
@@ -79,25 +83,69 @@ const loop = setInterval(() => {
         mario.style.marginLeft = '50px'
 
         gameover.innerHTML = "GAME OVER"
-        if (contPontos > 0) {
-            contPontos--
-            pontos.innerHTML = contPontos
-        }
-
-        podePontuar = false
+        
 
         // PARA O LOOP
         clearInterval(loop)
         clearInterval(tempo)
+        clearInterval(pontuou)
     } else {
         if(pipePosition <= 120 && pipePosition > 0 && marioPosition >= 148){
-            //console.log('PIPE: ' + pipePosition)
             podePontuar = true
-            
         }
     }
 }, 10);
 
+pontuou = setInterval(() => {
+    if (podePontuar) {
+        contPontos++
+        pontos.innerHTML = contPontos
+        podePontuar = false
+    }
+}, 1500);
+
+fundo = setInterval(() => {
+    if (dia) {
+        gameboard.style.background = 'linear-gradient(#082029, #56656b)'
+        pontos.style.color = 'white'
+        pontos.style.textShadow = '#082029 2px 3px 2px'
+        display.style.color = 'white'
+        gameover.style.color = 'white'
+        dia = false
+    } else {
+        gameboard.style.background = 'linear-gradient(#87CEEB, #E0F6FF)'
+        pontos.style.color = '#000000bb'
+        pontos.style.textShadow = '#87CEEB 2px 3px 2px'
+        display.style.color = '#000000bb'
+        gameover.style.color = '#000000bb'
+        dia = true
+    }
+}, 15000);
+
+}
+// FUNÇÃO QUE RESETA O JOGO PARA O INICIO
+const restart = () => {
+    console.log('clicou')
+    
+    pipe.style.left = '100%'
+
+    
+    mario.style.marginLeft = '0px'
+    mario.style.width = '150px'
+    mario.style.bottom = '68px'
+    mario.src = 'imagens/mario.gif'
+    mario.style.animation = ''
+
+    gameover.innerHTML = ""
+    pontos.innerHTML = "0"
+    
+
+    // FUNÇÃO QUE RECEBE UMA FUNÇÃO ANONIMA E UM TEMPO
+    setTimeout(() => {
+        start()
+    }, 500);
+    
+}
 
 // TEMPO
 /*function startTimer(duration, display) {
@@ -121,6 +169,10 @@ const loop = setInterval(() => {
     startTimer(0, display); // iniciando o timer
 };*/
 
+start()
 
 // LISTENER PARA QUANDO UMA TECLA FOR PRESSIONADA
 document.addEventListener('keydown', jump)
+
+// LISTENER PARA QUANDO UMA TECLA FOR PRESSIONADA
+//document.addEventListener('mousedown', restart)
