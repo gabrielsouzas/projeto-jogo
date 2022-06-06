@@ -18,17 +18,26 @@ const display = document.querySelector('.tempo');
 
 const gameboard = document.querySelector('.game-board')
 
+var larguraJanela = window.innerWidth;
+
 var jump
 var loop
 var pontuou
 var tempo
 var fundo
+
+// FUNÇÃO QUE INICIA O JOGO
 function start() {
     contPontos = 0
     podePontuar = false
 
     pipe.classList.add('pipeanimation')
 
+    // VERIFICA A LARGURA DA TELA E ALTERA A VELOCIDADE DO PIPE PARA DAR MAIS JOGABILIDADE
+    if (larguraJanela <= 950) {
+        pipe.style.animation = `pipe-animation 1.0s infinite linear`
+        console.log(pipe.style.animation)
+    }
 
     var timer = 0, minutes, seconds;
         tempo = setInterval(() => {
