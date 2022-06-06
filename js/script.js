@@ -11,7 +11,6 @@ const gameover = document.querySelector('.gameover')
 const pontos = document.querySelector('.pontos')
 let contPontos
 let podePontuar
-
 let dia = true
 
 // TEMPO
@@ -31,96 +30,98 @@ function start() {
     pipe.classList.add('pipeanimation')
 
 
-var timer = 0, minutes, seconds;
-    tempo = setInterval(() => {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-        display.textContent = minutes + ":" + seconds;
-        timer++
-        // Caso seja de contagem regressiva
-        /*if (--timer < 0) {
-            timer = duration;
-        }*/
-    }, 1000);
+    var timer = 0, minutes, seconds;
+        tempo = setInterval(() => {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            display.textContent = minutes + ":" + seconds;
+            timer++
+            // Caso seja de contagem regressiva
+            /*if (--timer < 0) {
+                timer = duration;
+            }*/
+        }, 1000);
 
-// FUNÇÃO QUE ADICIONA  E REMOVE A CLASSE JUMP NA IMAGEM DO MARIO PARA ELE PULAR
-jump = () => {
-    mario.classList.add('jump')
+    // FUNÇÃO QUE ADICIONA  E REMOVE A CLASSE JUMP NA IMAGEM DO MARIO PARA ELE PULAR
+    jump = () => {
+        mario.classList.add('jump')
 
-    // FUNÇÃO QUE RECEBE UMA FUNÇÃO ANONIMA E UM TEMPO
-    setTimeout(() => {
-        mario.classList.remove('jump')
-    }, 500);
-}
+        // FUNÇÃO QUE RECEBE UMA FUNÇÃO ANONIMA E UM TEMPO
+        setTimeout(() => {
+            mario.classList.remove('jump')
+        }, 500);
+    }
 
-// FUNÇÃO QUE CALCULA SE O MARIO BATEU NO PIPE
-loop = setInterval(() => {
-    // PEGA A POSIÇÃO DO PIPE
-    const pipePosition = pipe.offsetLeft
-    // SÓ DESSE JEITO VAI CONSEGUIR EPEGAR QUALQUER PROPRIEDADE SETADA NO MARIO
-    // PEGA O BOTTON DO MARIO
-    // REMOVE O PX COM REPLACE E TRANSFORMA EM NUMBER COM O +
-    const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '')
-    
-    // TESTA SE A POSIÇÃO DO PIPE FOR MENOR OU IGUAL A 120 ENTÃO ELA BATEU NO MARIO
-    if (pipePosition <= 120 && pipePosition > 0 && marioPosition < 148) {
-        // PARA A ANIMAÇÃO DO PIPE
-        //pipe.style.animation = 'none'
-        pipe.classList.remove('pipeanimation')
-        // SETA A POSIÇÃO QUE BATEU NO MARIO
-        pipe.style.left = `${pipePosition}px`
-
-        // PARA A ANIMAÇÃO DO MARIO
-        mario.style.animation = 'none'
-        // SETA A POSIÇÃO QUE BATEU NO PIPE
-        mario.style.bottom = `${marioPosition}px`
-
-        // SETA A IMAGEM DO MARIO MORRENDO, AJUSTA O TAMANHO E A MARGEM
-        mario.src = 'imagens/game-over.png'
-        mario.style.width = '75px'
-        mario.style.marginLeft = '50px'
-
-        gameover.innerHTML = "GAME OVER"
+    // FUNÇÃO QUE CALCULA SE O MARIO BATEU NO PIPE
+    loop = setInterval(() => {
+        // PEGA A POSIÇÃO DO PIPE
+        const pipePosition = pipe.offsetLeft
+        // SÓ DESSE JEITO VAI CONSEGUIR EPEGAR QUALQUER PROPRIEDADE SETADA NO MARIO
+        // PEGA O BOTTON DO MARIO
+        // REMOVE O PX COM REPLACE E TRANSFORMA EM NUMBER COM O +
+        const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '')
         
+        // TESTA SE A POSIÇÃO DO PIPE FOR MENOR OU IGUAL A 120 ENTÃO ELA BATEU NO MARIO
+        if (pipePosition <= 120 && pipePosition > 0 && marioPosition < 148) {
+            // PARA A ANIMAÇÃO DO PIPE
+            //pipe.style.animation = 'none'
+            pipe.classList.remove('pipeanimation')
+            // SETA A POSIÇÃO QUE BATEU NO MARIO
+            pipe.style.left = `${pipePosition}px`
 
-        // PARA O LOOP
-        clearInterval(loop)
-        clearInterval(tempo)
-        clearInterval(pontuou)
-    } else {
-        if(pipePosition <= 120 && pipePosition > 0 && marioPosition >= 148){
-            podePontuar = true
+            // PARA A ANIMAÇÃO DO MARIO
+            mario.style.animation = 'none'
+            // SETA A POSIÇÃO QUE BATEU NO PIPE
+            mario.style.bottom = `${marioPosition}px`
+
+            // SETA A IMAGEM DO MARIO MORRENDO, AJUSTA O TAMANHO E A MARGEM
+            mario.src = 'imagens/game-over.png'
+            mario.style.width = '75px'
+            mario.style.marginLeft = '50px'
+
+            gameover.innerHTML = "GAME OVER"
+            
+
+            // PARA O LOOP
+            clearInterval(loop)
+            clearInterval(tempo)
+            clearInterval(pontuou)
+        } else {
+            if(pipePosition <= 120 && pipePosition > 0 && marioPosition >= 148){
+                podePontuar = true
+            }
         }
-    }
-}, 10);
+    }, 10);
 
-pontuou = setInterval(() => {
-    if (podePontuar) {
-        contPontos++
-        pontos.innerHTML = contPontos
-        podePontuar = false
-    }
-}, 1500);
+    // CALCULA A PONTUAÇÃO DO MARIO
+    pontuou = setInterval(() => {
+        if (podePontuar) {
+            contPontos++
+            pontos.innerHTML = contPontos
+            podePontuar = false
+        }
+    }, 1500);
 
-fundo = setInterval(() => {
-    if (dia) {
-        gameboard.style.background = 'linear-gradient(#082029, #56656b)'
-        pontos.style.color = 'white'
-        pontos.style.textShadow = '#082029 2px 3px 2px'
-        display.style.color = 'white'
-        gameover.style.color = 'white'
-        dia = false
-    } else {
-        gameboard.style.background = 'linear-gradient(#87CEEB, #E0F6FF)'
-        pontos.style.color = '#000000bb'
-        pontos.style.textShadow = '#87CEEB 2px 3px 2px'
-        display.style.color = '#000000bb'
-        gameover.style.color = '#000000bb'
-        dia = true
-    }
-}, 15000);
+    // TROCA O FUNDO COM AS CORES DO DIA PARA A NOITE E O INVERSO CONFORME PASSA O TEMPO
+    fundo = setInterval(() => {
+        if (dia) {
+            gameboard.style.background = 'linear-gradient(#082029, #56656b)'
+            pontos.style.color = 'white'
+            pontos.style.textShadow = '#082029 2px 3px 2px'
+            display.style.color = 'white'
+            gameover.style.color = 'white'
+            dia = false
+        } else {
+            gameboard.style.background = 'linear-gradient(#87CEEB, #E0F6FF)'
+            pontos.style.color = '#000000bb'
+            pontos.style.textShadow = '#87CEEB 2px 3px 2px'
+            display.style.color = '#000000bb'
+            gameover.style.color = '#000000bb'
+            dia = true
+        }
+    }, 15000);
 
 }
 // FUNÇÃO QUE RESETA O JOGO PARA O INICIO
@@ -174,5 +175,5 @@ start()
 // LISTENER PARA QUANDO UMA TECLA FOR PRESSIONADA
 document.addEventListener('keydown', jump)
 
-// LISTENER PARA QUANDO UMA TECLA FOR PRESSIONADA
+// LISTENER PARA QUANDO O MOUSE FOR PRESSIONADO
 //document.addEventListener('mousedown', restart)
