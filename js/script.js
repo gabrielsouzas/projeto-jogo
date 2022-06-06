@@ -185,4 +185,4 @@ start()
 document.addEventListener('keydown', jump)
 
 // LISTENER PARA QUANDO O MOUSE FOR PRESSIONADO
-//document.addEventListener('mousedown', restart)
+document.addEventListener('mousedown', jump)
