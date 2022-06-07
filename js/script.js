@@ -41,6 +41,7 @@ let marioDeathImageSize = '75px'
 let marioDeathMarginLeft = '50px'
 let classJump = 'jump'
 let heightObjects = '68px'
+let timePoints = 1500
 
 // FUNÇÃO QUE INICIA O JOGO
 function start() {
@@ -52,6 +53,7 @@ function start() {
     // VERIFICA A LARGURA DA TELA E ALTERA A VELOCIDADE DO PIPE PARA DAR MAIS JOGABILIDADE
     if (larguraJanela <= 950) {
         pipe.style.animation = `pipe-animation 1.0s infinite linear`
+        timePoints = 1000
     }
 
     console.log(larguraJanela)
@@ -152,7 +154,7 @@ function start() {
             pontos.innerHTML = contPontos
             podePontuar = false
         }
-    }, 1500);
+    }, timePoints);
 
     // TROCA O FUNDO COM AS CORES DO DIA PARA A NOITE E O INVERSO CONFORME PASSA O TEMPO
     fundo = setInterval(() => {
