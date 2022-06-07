@@ -7,6 +7,12 @@ const pipe = document.querySelector('.pipe')
 // PEGA O SPAM DE GAME OVER
 const gameover = document.querySelector('.gameover')
 
+// PEGA A IMAGEM DO CHÃO
+const floor = document.querySelector('.floor')
+
+// PEGA AS INFORMAÇÕES DO DESENVOLVEDOR BASE
+const info = document.querySelector('.info')
+
 // PEGA O SPAM DE PONTOS
 const pontos = document.querySelector('.pontos')
 let contPontos
@@ -31,6 +37,7 @@ let marioJumpHeight = 148
 let marioDeathImageSize = '75px'
 let marioDeathMarginLeft = '50px'
 let classJump = 'jump'
+let heightObjects = '68px'
 
 // FUNÇÃO QUE INICIA O JOGO
 function start() {
@@ -48,15 +55,23 @@ function start() {
     if (larguraJanela <= 400) {
         pipe.style.width = '30px';
         pipe.style.height = '30px';
+        pipe.style.bottom = '24px'
 
         mario.style.width = '60px';
         marioDeathImageSize = '30px';
         marioDeathMarginLeft = '22px'
+        mario.style.bottom = '24px'
 
         pipeDistanceLeft = 50
-        marioJumpHeight = 95
+        marioJumpHeight = 54
 
         classJump = 'jumpphone'
+
+        floor.style.width = '600px'
+
+        heightObjects = '20px'
+
+        info.style.fontSize = '0.5em'
 
     }
 
@@ -163,7 +178,7 @@ const restart = () => {
     
     mario.style.marginLeft = '0px'
     mario.style.width = '150px'
-    mario.style.bottom = '68px'
+    mario.style.bottom = heightObjects
     mario.src = 'imagens/mario.gif'
     mario.style.animation = ''
 
