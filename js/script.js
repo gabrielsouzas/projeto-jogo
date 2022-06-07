@@ -10,6 +10,9 @@ const gameover = document.querySelector('.gameover')
 // PEGA A IMAGEM DO CHÃO
 const floor = document.querySelector('.floor')
 
+// PEGA AS NUVENS
+const clouds = document.querySelector('.clouds')
+
 // PEGA AS INFORMAÇÕES DO DESENVOLVEDOR BASE
 const info = document.querySelector('.info')
 
@@ -72,6 +75,8 @@ function start() {
         heightObjects = '20px'
 
         info.style.fontSize = '0.5em'
+
+        clouds.style.width = '300px'
 
     }
 
