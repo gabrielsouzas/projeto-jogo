@@ -48,6 +48,10 @@
     animation: jump 500ms ease-out; /*EASE-OUT - FINAL MAIS SUAVE*/
 }
 
+.jumpphone {
+    animation: jumpPhoneScreen 500ms ease-out; /*EASE-OUT - FINAL MAIS SUAVE*/
+}
+
 .clouds {
     position: absolute;
     width: 500px;
@@ -116,6 +120,24 @@
     }
     60% {
         bottom: 249px;
+    }
+    100% {
+        bottom: 68;
+    }
+}
+
+@keyframes jumpPhoneScreen{
+    0% {
+        bottom: 68;
+    }
+    40% {
+        bottom: 149px;
+    }
+    50% {
+        bottom: 149px;
+    }
+    60% {
+        bottom: 149px;
     }
     100% {
         bottom: 68;

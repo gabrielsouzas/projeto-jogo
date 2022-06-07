@@ -26,6 +26,12 @@ var pontuou
 var tempo
 var fundo
 
+let pipeDistanceLeft = 120
+let marioJumpHeight = 148
+let marioDeathImageSize = '75px'
+let marioDeathMarginLeft = '50px'
+let classJump = 'jump'
+
 // FUNÇÃO QUE INICIA O JOGO
 function start() {
     contPontos = 0
@@ -36,7 +42,22 @@ function start() {
     // VERIFICA A LARGURA DA TELA E ALTERA A VELOCIDADE DO PIPE PARA DAR MAIS JOGABILIDADE
     if (larguraJanela <= 950) {
         pipe.style.animation = `pipe-animation 1.0s infinite linear`
-        console.log(pipe.style.animation)
+    }
+
+    console.log(larguraJanela)
+    if (larguraJanela <= 400) {
+        pipe.style.width = '30px';
+        pipe.style.height = '30px';
+
+        mario.style.width = '60px';
+        marioDeathImageSize = '30px';
+        marioDeathMarginLeft = '22px'
+
+        pipeDistanceLeft = 50
+        marioJumpHeight = 95
+
+        classJump = 'jumpphone'
+
     }
 
     var timer = 0, minutes, seconds;
@@ -55,11 +76,11 @@ function start() {
 
     // FUNÇÃO QUE ADICIONA  E REMOVE A CLASSE JUMP NA IMAGEM DO MARIO PARA ELE PULAR
     jump = () => {
-        mario.classList.add('jump')
+        mario.classList.add(classJump)
 
         // FUNÇÃO QUE RECEBE UMA FUNÇÃO ANONIMA E UM TEMPO
         setTimeout(() => {
-            mario.classList.remove('jump')
+            mario.classList.remove(classJump)
         }, 500);
     }
 
@@ -73,7 +94,7 @@ function start() {
         const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '')
         
         // TESTA SE A POSIÇÃO DO PIPE FOR MENOR OU IGUAL A 120 ENTÃO ELA BATEU NO MARIO
-        if (pipePosition <= 120 && pipePosition > 0 && marioPosition < 148) {
+        if (pipePosition <= pipeDistanceLeft && pipePosition > 0 && marioPosition < marioJumpHeight) {
             // PARA A ANIMAÇÃO DO PIPE
             //pipe.style.animation = 'none'
             pipe.classList.remove('pipeanimation')
@@ -87,8 +108,8 @@ function start() {
 
             // SETA A IMAGEM DO MARIO MORRENDO, AJUSTA O TAMANHO E A MARGEM
             mario.src = 'imagens/game-over.png'
-            mario.style.width = '75px'
-            mario.style.marginLeft = '50px'
+            mario.style.width = marioDeathImageSize
+            mario.style.marginLeft = marioDeathMarginLeft
 
             gameover.innerHTML = "GAME OVER"
             
@@ -98,7 +119,7 @@ function start() {
             clearInterval(tempo)
             clearInterval(pontuou)
         } else {
-            if(pipePosition <= 120 && pipePosition > 0 && marioPosition >= 148){
+            if(pipePosition <= pipeDistanceLeft && pipePosition > 0 && marioPosition >= marioJumpHeight){
                 podePontuar = true
             }
         }
