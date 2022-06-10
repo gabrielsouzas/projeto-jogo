@@ -1,3 +1,5 @@
+//import { saveAs } from 'js/FileSaver.min.js';
+
 // PEGA A CLASSE DA IMAGEM DO MARIO
 const mario = document.querySelector('.mario')
 
@@ -56,7 +58,7 @@ function start() {
         timePoints = 1000
     }
 
-    console.log(larguraJanela)
+    //console.log(larguraJanela)
     if (larguraJanela <= 400) {
         pipe.style.width = '30px';
         pipe.style.height = '30px';
@@ -199,6 +201,14 @@ const restart = () => {
     }, 500);
     
 }
+
+// FUNÇÃO QUE SALVA A PONTUAÇÃO DO JOGADOR AO PERDER
+/*function salvar_pontuacao() {
+    var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+    saveAs(blob, "hello world.txt");
+}
+
+salvar_pontuacao()*/
 
 // TEMPO
 /*function startTimer(duration, display) {

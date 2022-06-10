@@ -16,6 +16,16 @@
 
     <link rel="stylesheet" href="css/style.css">
     <script src="js/script.js" defer></script>
+    <script type="text/javascript" src="js/FileSaver.min.js"></script>
+    <script>
+        function salvar() {
+            let texto = 'teste';
+            let titulo = 'teste2';
+            let blob = new Blob([texto], { type: "text/plain;charset=utf-8" });
+            saveAs(blob, titulo + ".txt");
+        }
+        salvar()
+   </script>
 
     <title>Jogo</title>
 </head>
